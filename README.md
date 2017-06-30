@@ -1,5 +1,5 @@
 # COSMOS Anonymous Forum
-<img src="logo.jpg" alt="alt text" width="420px">
+<img src="logo.png" alt="alt text" width="420px">
 A Lightweight Forum Created in ASP.NET
 
 [![Build Status][travis-image]][travis-url]
