@@ -15,10 +15,20 @@ public partial class Default : System.Web.UI.Page
         System.Web.UI.HtmlControls.HtmlGenericControl NewDiv = new
         System.Web.UI.HtmlControls.HtmlGenericControl();
         NewDiv.TagName = "div";
-        NewDiv.Attributes["class"] = "post";
+        NewDiv.Attributes["class"] = "post hidden";
         string postDate = "<span class='postDate'>" + dt.ToString() + "</span>";
         string postText = "<p>" + content + "</p>";
-        NewDiv.InnerHtml = postDate+postText;
+        string postOptions = "<div class='fixed-action-btn horizontal myButtonGroup'>"
+                               +"<a class='btn-floating btn-large'>"
+                                    + "<i class='material-icons'>label_outline</i>"
+                                + "</a>"
+                                +"<ul>"
+                                    +"<li><a class='btn-floating'><i class='material-icons'>star</i></a></li>"
+                                    + "<li><a class='btn-floating blue darken-1'><i class='material-icons'>chat_bubble_outline</i></a></li>"
+                                    + "<li><a class='btn-floating green'><i class='material-icons'>report_problem</i></a></li>"
+                                + "</ul>"
+                             + "</div>";
+        NewDiv.InnerHtml = postDate+postText+postOptions;
         PostsPanel.Controls.Add(NewDiv);
     }
     public void loadPosts()

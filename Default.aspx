@@ -26,9 +26,7 @@
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
         </Scripts>
     </telerik:RadScriptManager>
-    <script type="text/javascript">
-        //Put your JavaScript code here.
-    </script>
+   
     <div>
         <h1>COSMOS</h1>
         <asp:Panel ID="SubmitPanel" CssClass="submitPanel" runat="server">
@@ -38,6 +36,7 @@
                         <asp:TextBox ID="SubmitText" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
                         <label for="SubmitText">What's on your mind?</label>
                     </div>
+
                     <asp:LinkButton ID="submitButton" CssClass="btn waves-effect waves-light" type="submit" OnClick="SubmitButton_Click" runat="server">Submit
                     <i class="material-icons right">send</i></asp:LinkButton>
                  </div>
@@ -47,4 +46,11 @@
     </div>
     </form>
 </body>
+     <script type="text/javascript">
+        //Put your JavaScript code here.
+        console.log("ran it")
+         var posts = $('div.post').hide();
+         posts.removeClass("hidden");
+        document.onload = posts.fadeIn(1200);
+    </script>
 </html>

@@ -67,3 +67,51 @@ textarea.materialize-textarea:focus:not([readonly]) {
     box-shadow: 0 1px 0 0 #539987;
 }
 
+
+.fixed-action-btn {
+    position: relative;
+    top:5px;
+    right:0px;
+    left:0px;
+    bottom:0px;
+    
+}
+a.btn-floating.btn-large {
+    height: 40px;
+    width: 40px;
+    top:5px;
+ 
+}
+a.btn-floating.btn-large >i{
+    position:absolute;
+    top:-8px;
+    right:0px;
+    left:0px;
+}
+
+div.myButtonGroup {
+    border-top: solid 1px #52FFB8;
+    margin-top: 25px;
+    margin-bottom:15px;
+}
+
+.myButtonGroup > ul {
+    bottom: 0px;
+    top: 20px;
+    left: 0px;
+    right: 0px;
+    float: right;
+    position: relative;
+    /* margin-right: auto; */
+    margin-left: auto;
+}
+
+.fixed-action-btn.horizontal ul {
+    top:20px;
+    left:0px;
+    right:0px;
+}
+
+.hidden {
+    visibility:hidden;
+}
