@@ -7,7 +7,7 @@ A Lightweight Forum Created in ASP.NET
 I created COSMOS as a fun project to improve my ASP.NET, C# and SQL Database skills.
 This project allowed me to practice building full-stack applications in which I could sharpen both my front-end and back-end development skills.
 
-##Name
+## Name
 I chose the name COSMOS because I enjoy astronomy and refering to yourself as a cosmonaut sounds 10x more badass than an astronuat. And, no, my capslock does not perieodically get stuck. You can not be a successful startup with predictable spelling.
 
 ## Built With
