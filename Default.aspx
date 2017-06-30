@@ -29,8 +29,26 @@
    
     <div>
         <h1>COSMOS</h1>
+        <asp:Panel ID="CommentArea" CssClass="commentOverlay hidden" runat="server">
+            <asp:Panel ID="CommentPanel" CssClass="submitPanel" runat="server">
+            <form class="col s12 comment">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <a href="javascript:void(0);" id="ExitReplyScreen" class="exit-btn"><i class="Medium material-icons exit-btn">exit_to_app</i></a>
+                        <asp:TextBox ID="CommentTextBox" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
+                        <label for="CommentTextBox">Reply to Post!</label>
+                    </div>
+
+                    <asp:LinkButton ID="SubmitComment" CssClass="btn waves-effect waves-light" type="submit" OnClick="SubmitCommentButton_Click" runat="server">Reply
+                    <i class="material-icons right">chat_bubble</i></asp:LinkButton>
+                 </div>
+            </form>
+                <asp:HiddenField ID="Post_id" Value="-1" runat="server" />
+            </asp:Panel>
+        </asp:Panel>
+
         <asp:Panel ID="SubmitPanel" CssClass="submitPanel" runat="server">
-             <form class="col s12">
+             <form class="col s12 submit">
                 <div class="row">
                     <div class="input-field col s12">
                         <asp:TextBox ID="SubmitText" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
@@ -48,9 +66,18 @@
 </body>
      <script type="text/javascript">
         //Put your JavaScript code here.
-        console.log("ran it")
          var posts = $('div.post').hide();
          posts.removeClass("hidden");
-        document.onload = posts.fadeIn(1200);
+         document.onload = posts.fadeIn(1200);
+
+         $("#CommentArea").hide().removeClass("hidden");
+         $('#ExitReplyScreen').click(function () { $("#CommentArea").fadeOut(300); });
+         $('a.OpenReplyWindowBtn').click(function (e) {
+             $("#CommentArea").fadeIn(300);
+             //post_id of post being commented on
+             var post_id = $(this).parents("div.post").attr('post_id');
+             document.getElementById("<%=Post_id.ClientID%>").value = post_id;
+         });
+         
     </script>
 </html>
