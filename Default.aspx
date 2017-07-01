@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default"  EnableEventValidation="false" %>
 
+<%@ Register Src="~/Controls/PostControl.ascx" TagPrefix="uc1" TagName="PostControl" %>
+<%@ Reference Control="~/Controls/PostControl.ascx" %> 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -46,7 +49,6 @@
                 <asp:HiddenField ID="Post_id" Value="-1" runat="server" />
             </asp:Panel>
         </asp:Panel>
-
         <asp:Panel ID="SubmitPanel" CssClass="submitPanel" runat="server">
              <form class="col s12 submit">
                 <div class="row">
@@ -60,24 +62,26 @@
                  </div>
             </form>
         </asp:Panel>
-        <asp:Panel ID="PostsPanel" runat="server"></asp:Panel>
+        <asp:Panel ID="PostsPanel" runat="server">
+        </asp:Panel>
     </div>
     </form>
 </body>
      <script type="text/javascript">
-        //Put your JavaScript code here.
+         //Put your JavaScript code here.
          var posts = $('div.post').hide();
          posts.removeClass("hidden");
          document.onload = posts.fadeIn(1200);
-
          $("#CommentArea").hide().removeClass("hidden");
          $('#ExitReplyScreen').click(function () { $("#CommentArea").fadeOut(300); });
          $('a.OpenReplyWindowBtn').click(function (e) {
+
              $("#CommentArea").fadeIn(300);
              //post_id of post being commented on
-             var post_id = $(this).parents("div.post").attr('post_id');
+             var post_id = $(this).parents("div.post").children("span.post_id").eq(0).text();
+             console.log(post_id);
              document.getElementById("<%=Post_id.ClientID%>").value = post_id;
          });
-         
+
     </script>
 </html>

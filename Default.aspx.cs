@@ -3,43 +3,33 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Web.UI.HtmlControls;
 
-public partial class Default : System.Web.UI.Page 
+public partial class Default : System.Web.UI.Page
 {
     private const string Table = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-            loadPosts();
+        loadPosts();
+        /*ASP.controls_postcontrol_ascx NewPost = (ASP.controls_postcontrol_ascx)LoadControl("~/Controls/PostControl.ascx");
+        NewPost.post_id = "4";
+        NewPost.textContent = "Yeee boi more texttiy bois";
+        NewPost.dt = "2017/8/1 12:00:00";
+        NewPost.comments = getComments(4);
+        PostControl.Controls.Add(NewPost);*/
     }
 
 
     public void createPost(int post_id, string content, DateTime dt)
     {
-        System.Web.UI.HtmlControls.HtmlGenericControl NewDiv = new
-        System.Web.UI.HtmlControls.HtmlGenericControl();
-        NewDiv.TagName = "div";
-        NewDiv.Attributes["class"] = "post hidden";
-        NewDiv.Attributes["post_id"] = post_id+"";
-        string postDate = "<span class='postDate'>" + dt.ToString() + "</span>";
-        string postText = "<p>" + content + "</p>";
-        string postOptions = "<div class='fixed-action-btn horizontal myButtonGroup'>"
-                               +"<a class='btn-floating btn-large'>"
-                                    + "<i class='material-icons'>label_outline</i>"
-                                + "</a>"
-                                +"<ul>"
-                                    +"<li><a class='btn-floating'><i class='material-icons'>star</i></a></li>"
-                                    + "<li><a class='btn-floating blue darken-1 OpenReplyWindowBtn'><i class='material-icons'>chat_bubble_outline</i></a></li>"
-                                    + "<li><a class='btn-floating green'><i class='material-icons'>report_problem</i></a></li>"
-                                + "</ul>"
-                             + "</div>";
+        ASP.controls_postcontrol_ascx NewPost = (ASP.controls_postcontrol_ascx)LoadControl("~/Controls/PostControl.ascx");
+        NewPost.post_id = post_id + "";
+        NewPost.textContent = content;
+        NewPost.dt = dt.ToString();
+        NewPost.comments = getComments(post_id);
+        PostsPanel.Controls.Add(NewPost);
 
-
-
-        string comments = getComments(post_id);
-        NewDiv.InnerHtml = postDate+postText+postOptions+comments;
-        PostsPanel.Controls.Add(NewDiv);
     }
 
-    private string getComments(int post_id)
+    public string getComments(int post_id)
     {
         SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
         conn.Open();
@@ -52,6 +42,7 @@ public partial class Default : System.Web.UI.Page
             comments += createComment(reader.GetString(1), reader.GetDateTime(2));
         }
         reader.Close();
+        conn.Close();
         return comments;
     }
 
@@ -69,15 +60,23 @@ public partial class Default : System.Web.UI.Page
     public void loadPosts()
     {
         SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
-        conn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT id, textContent, postDateTime FROM [MyDataBase].[dbo].[forum_posts] ORDER BY id DESC;", conn);
-        SqlDataReader reader = cmd.ExecuteReader();
-        while (reader.Read())
+
+        try
         {
-            createPost(reader.GetInt32(0),reader.GetString(1), reader.GetDateTime(2));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT id, textContent, postDateTime FROM [MyDataBase].[dbo].[forum_posts] ORDER BY id DESC;", conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                createPost(reader.GetInt32(0), reader.GetString(1), reader.GetDateTime(2));
+            }
+            reader.Close();
         }
-        reader.Close();
-        conn.Close();
+        finally
+        {
+            
+            conn.Close();
+        }
     }
 
 
@@ -85,6 +84,9 @@ public partial class Default : System.Web.UI.Page
 
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
+        //Removes Comment Area to allow multiple forms on one page
+        CommentArea.Visible = false;
+
         string text = SubmitText.Text;
         Debug.WriteLine("Posting: "+text);
         if (text.Length > 0)
@@ -92,6 +94,8 @@ public partial class Default : System.Web.UI.Page
             postToDatabase(text);
             SubmitText.Text = "";
         }
+
+        CommentArea.Visible = true;
     }
 
     public void postToDatabase(string textContent)
@@ -126,7 +130,7 @@ public partial class Default : System.Web.UI.Page
         if (text.Length > 0)
         {
             postCommentToDatabase(text, Convert.ToInt32(Post_id.Value));
-            CommentTextBox.Text = "";
+            CommentTextBox.Text = null;
         }
     }
 }
