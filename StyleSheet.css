@@ -13,20 +13,24 @@ h1 {
 }
 
 div.post {
-    width: 700px;
     background-color: #615756;
     padding: 5px;
-    padding-top:3px;
-    margin: 20px;
-    margin-left:auto;
-    margin-right:auto;
+    padding-top: 3px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 div.post > p {
         margin: 0px;
         color: #52FFB8;
         font-size:16px;
         font-family: 'Lato', sans-serif;
+}
+
+div.post.col.m6 {
+    padding:10px;
 }
 
 span.postDate {
@@ -36,15 +40,12 @@ span.postDate {
 }
 
 #SubmitPanel {
-    width:700px;
-    margin:20px;
     background-color:#615756;
     color:#52FFB8;
     padding-bottom:1px;
     padding-right:5px;
-    margin-left:auto;
-    margin-right:auto;
 }
+
 
 #submitButton {
     float:right;
@@ -133,16 +134,16 @@ div.comment{
 }
 
 #CommentPanel {
-    width: 700px;
-    margin: 20px;
-    background-color: #615756;
-    color: #52FFB8;
     padding-bottom: 1px;
-    padding-right: 5px;
-    margin-top:150px;
     margin-left: auto;
     margin-right: auto;
     z-index: 9;
+}
+
+.col.s12.m6.commentField {
+    background-color: #615756;
+    color: #52FFB8;
+    padding:10px;
 }
 
 #SubmitComment {
@@ -156,4 +157,14 @@ a.exit-btn {
 i.exit-btn {
     font-size: 32px;
     color: #26a69a;
+}
+
+.row .col {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+.input-field.col.s12 {
+    padding: 10px;
 }

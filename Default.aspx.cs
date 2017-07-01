@@ -9,12 +9,6 @@ public partial class Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         loadPosts();
-        /*ASP.controls_postcontrol_ascx NewPost = (ASP.controls_postcontrol_ascx)LoadControl("~/Controls/PostControl.ascx");
-        NewPost.post_id = "4";
-        NewPost.textContent = "Yeee boi more texttiy bois";
-        NewPost.dt = "2017/8/1 12:00:00";
-        NewPost.comments = getComments(4);
-        PostControl.Controls.Add(NewPost);*/
     }
 
 

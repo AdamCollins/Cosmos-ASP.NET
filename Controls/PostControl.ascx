@@ -5,7 +5,7 @@
     public string comments;
     public string post_id;
 </script>
-<div class="post hidden" runat="server">
+<div class="post hidden col s12 m6" runat="server">
     <span class='postDate'><%= dt %></span>
     <span class="post_id hidden"><%= post_id %></span>
     <p><%= textContent %></p>
