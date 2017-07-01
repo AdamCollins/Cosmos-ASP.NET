@@ -3702,17 +3702,20 @@ nav ul a span.badge {
   /*START USER ADDED*/
     .row div.post.col.m6 {
         margin-left: 25%;
-    }
-    #CommentPanel {
-        margin-top: 150px;
-    }
-    /*END USER ADDED*/
-    .row .col.m7 {
-        width: 58.3333333333%;
-        margin-left: auto;
-        left: auto;
-        right: auto;
-    }
+    }-
+ }
+  .row .col.l12 {
+     ow .col.l12 {
+       width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+  }
+  .row .col.offset-l1 {
+    margin-left: 8.3333333333%;
+  }
+  .row .col.pull-l }
+  .row .col.pull-l }
   .row .col.m8 {
     width: 66.6666666667%;
     margin-left: auto;

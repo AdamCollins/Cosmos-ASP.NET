@@ -23,6 +23,7 @@
     <link href="StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
+    <%--<img src="loading.gif" style="position:absolute" />--%>
     <form id="form1" runat="server">
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
         <Scripts>
@@ -31,7 +32,6 @@
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
         </Scripts>
     </telerik:RadScriptManager>
-   
         <h1>COSMOS</h1>
             <div class="row">
                 <div class="col m3 hide-on-small-only"></div>

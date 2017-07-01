@@ -5,7 +5,7 @@ using System.Web.UI.HtmlControls;
 
 public partial class Default : System.Web.UI.Page
 {
-    private const string Table = "";
+    private const string database = "cosmos_db";
     protected void Page_Load(object sender, EventArgs e)
     {
         loadPosts();
@@ -25,9 +25,9 @@ public partial class Default : System.Web.UI.Page
 
     public string getComments(int post_id)
     {
-        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
+        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database="+database+"; Integrated Security=true");
         conn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT TOP (10) [id], [text_content], [post_datetime] FROM[MyDataBase].[dbo].[forum_comments] WHERE[post_id] = @post_id ORDER BY[post_datetime] DESC; ", conn);
+        SqlCommand cmd = new SqlCommand("SELECT TOP (10) [id], [text_content], [post_datetime] FROM[" + database + "].[dbo].[forum_comments] WHERE[post_id] = @post_id ORDER BY[post_datetime] DESC; ", conn);
         cmd.Parameters.AddWithValue("@post_id", post_id);
         SqlDataReader reader = cmd.ExecuteReader();
         string comments = "";
@@ -53,12 +53,12 @@ public partial class Default : System.Web.UI.Page
 
     public void loadPosts()
     {
-        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
+        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=" + database + "; Integrated Security=true");
 
         try
         {
             conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT id, textContent, postDateTime FROM [MyDataBase].[dbo].[forum_posts] ORDER BY id DESC;", conn);
+            SqlCommand cmd = new SqlCommand("SELECT id, textContent, postDateTime FROM [" + database + "].[dbo].[forum_posts] ORDER BY id DESC;", conn);
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -93,9 +93,9 @@ public partial class Default : System.Web.UI.Page
 
     public void postToDatabase(string textContent)
     {
-        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
+        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=" + database + "; Integrated Security=true");
         conn.Open();
-        String query = "INSERT INTO [MyDataBase].[dbo].[forum_posts] (textContent, postDateTime) VALUES (@textContent, GETDATE())";
+        String query = "INSERT INTO [" + database + "].[dbo].[forum_posts] (textContent, postDateTime) VALUES (@textContent, GETDATE())";
 
         SqlCommand command = new SqlCommand(query, conn);
         command.Parameters.AddWithValue("@textContent", textContent);
@@ -106,9 +106,9 @@ public partial class Default : System.Web.UI.Page
 
     public void postCommentToDatabase(string textContent, int postId)
     {
-        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=MyDataBase; Integrated Security=true");
+        SqlConnection conn = new SqlConnection("Server=.\\SQLEXPRESS;Database=" + database + "; Integrated Security=true");
         conn.Open();
-        String query = "INSERT INTO [MyDataBase].[dbo].[forum_comments] (post_id, text_Content, post_datetime) VALUES (@post_id, @textContent, GETDATE())";
+        String query = "INSERT INTO [" + database + "].[dbo].[forum_comments] (post_id, text_Content, post_datetime) VALUES (@post_id, @textContent, GETDATE())";
         SqlCommand command = new SqlCommand(query, conn);
         command.Parameters.AddWithValue("@post_id", postId);
         command.Parameters.AddWithValue("@textContent", textContent);
