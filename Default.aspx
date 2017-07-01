@@ -14,7 +14,7 @@
     <!--Materialize-->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
-    <link href="css/materialize.css" rel="stylesheet" />
+    <%--<link href="css/materialize.css" rel="stylesheet" />--%>
      <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <!--Icons-->

@@ -168,3 +168,12 @@ i.exit-btn {
 .input-field.col.s12 {
     padding: 10px;
 }
+
+
+@media only screen and (min-width: 601px) {
+    /*START USER ADDED*/
+    .row div.post.col.m6 {
+        margin-left: 25%;
+    }
+    /*END USER ADDED*/
+}
