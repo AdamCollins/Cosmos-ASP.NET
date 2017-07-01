@@ -49,6 +49,7 @@ span.postDate {
 
 #submitButton {
     float:right;
+    margin-right:10px;
 }
 
 .waves-effect.waves-brown .waves-ripple {
@@ -67,6 +68,31 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #539987;
     box-shadow: 0 1px 0 0 #539987;
+}
+
+.input-field label:not(.label-icon).active {
+    margin-top:15px;
+    font-size:1rem;
+}
+
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+}
+.spinner {
+    height:15%;
+    margin:auto;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
 }
 
 
@@ -134,7 +160,6 @@ div.comment{
 }
 
 #CommentPanel {
-    padding-bottom: 1px;
     margin-left: auto;
     margin-right: auto;
     z-index: 9;
@@ -148,6 +173,7 @@ div.comment{
 
 #SubmitComment {
     float:right;
+    margin-right:10px;
 }
 
 a.exit-btn {
@@ -171,9 +197,27 @@ i.exit-btn {
 
 
 @media only screen and (min-width: 601px) {
-    /*START USER ADDED*/
     .row div.post.col.m6 {
         margin-left: 25%;
     }
-    /*END USER ADDED*/
+    #CommentPanel {
+        margin-top:10%;
+    }
+    
+}
+
+
+@media only screen and (max-width: 601px) {
+    #CommentPanel {
+        height: 100%;
+    }
+    .col.s12.m6.commentField {
+        height:100%;
+    }
+    #CommentTextBox {
+        height:85%;
+    }
+    .input-field.col.s12 {
+        height:90%;
+    }
 }
