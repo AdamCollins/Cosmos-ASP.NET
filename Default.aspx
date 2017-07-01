@@ -32,9 +32,19 @@
    
     <div>
         <h1>COSMOS</h1>
+        <asp:Panel ID="SubmitPanel" CssClass="submitPanel" runat="server">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <asp:TextBox ID="SubmitText" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
+                        <label for="SubmitText">What's on your mind?</label>
+                    </div>
+
+                    <asp:LinkButton ID="submitButton" CssClass="btn waves-effect waves-light" type="submit" OnClick="SubmitButton_Click" runat="server">Submit
+                    <i class="material-icons right">send</i></asp:LinkButton>
+                 </div>
+        </asp:Panel>
         <asp:Panel ID="CommentArea" CssClass="commentOverlay hidden" runat="server">
             <asp:Panel ID="CommentPanel" CssClass="submitPanel" runat="server">
-            <form class="col s12 comment">
                 <div class="row">
                     <div class="input-field col s12">
                         <a href="javascript:void(0);" id="ExitReplyScreen" class="exit-btn"><i class="Medium material-icons exit-btn">exit_to_app</i></a>
@@ -45,22 +55,8 @@
                     <asp:LinkButton ID="SubmitComment" CssClass="btn waves-effect waves-light" type="submit" OnClick="SubmitCommentButton_Click" runat="server">Reply
                     <i class="material-icons right">chat_bubble</i></asp:LinkButton>
                  </div>
-            </form>
                 <asp:HiddenField ID="Post_id" Value="-1" runat="server" />
             </asp:Panel>
-        </asp:Panel>
-        <asp:Panel ID="SubmitPanel" CssClass="submitPanel" runat="server">
-             <form class="col s12 submit">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <asp:TextBox ID="SubmitText" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
-                        <label for="SubmitText">What's on your mind?</label>
-                    </div>
-
-                    <asp:LinkButton ID="submitButton" CssClass="btn waves-effect waves-light" type="submit" OnClick="SubmitButton_Click" runat="server">Submit
-                    <i class="material-icons right">send</i></asp:LinkButton>
-                 </div>
-            </form>
         </asp:Panel>
         <asp:Panel ID="PostsPanel" runat="server">
         </asp:Panel>

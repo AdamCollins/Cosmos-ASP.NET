@@ -95,7 +95,6 @@ public partial class Default : System.Web.UI.Page
             SubmitText.Text = "";
         }
 
-        CommentArea.Visible = true;
     }
 
     public void postToDatabase(string textContent)
@@ -126,11 +125,13 @@ public partial class Default : System.Web.UI.Page
 
     protected void SubmitCommentButton_Click(object sender, EventArgs e)
     {
+        SubmitPanel.Visible = false;
         string text = CommentTextBox.Text;
         if (text.Length > 0)
         {
             postCommentToDatabase(text, Convert.ToInt32(Post_id.Value));
             CommentTextBox.Text = null;
         }
+        SubmitPanel.Visible = true;
     }
 }
