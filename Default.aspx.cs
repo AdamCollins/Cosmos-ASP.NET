@@ -6,6 +6,7 @@ using System.Web.UI.HtmlControls;
 public partial class Default : System.Web.UI.Page
 {
     private const string database = "cosmos_db";
+    //local database
     private const string connectionString = "Server=.\\SQLEXPRESS;Database=" + database + "; Integrated Security=true";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -91,9 +92,6 @@ public partial class Default : System.Web.UI.Page
         }
     }
 
-
-
-
     protected void SubmitButton_Click(object sender, EventArgs e)
     {
         //Removes Comment Area to allow multiple forms on one page
@@ -116,7 +114,7 @@ public partial class Default : System.Web.UI.Page
             String query = "INSERT INTO [" + database + "].[dbo].[forum_posts] (textContent, postDateTime) VALUES (@textContent, GETUTCDATE())";
 
             SqlCommand command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@textContent", textContent);
+            command.Parameters.AddWithValue("@textContent", textContent.Replace("\n","</br>"));
             command.ExecuteNonQuery();
             conn.Close();
             Response.Redirect(Request.RawUrl);
@@ -128,7 +126,7 @@ public partial class Default : System.Web.UI.Page
         SqlConnection conn = null;
         if (connectToDatabase(ref conn))
         {
-            String query = "INSERT INTO [" + database + "].[dbo].[forum_comments] (post_id, text_Content, post_datetime) VALUES (@post_id, @textContent, GETUTCDATE())";
+            String query = "INSERT INTO [" + database + "].[dbo].[forum_comments] (post_id, text_content, post_datetime) VALUES (@post_id, @textContent, GETUTCDATE())";
             SqlCommand command = new SqlCommand(query, conn);
             command.Parameters.AddWithValue("@post_id", postId);
             command.Parameters.AddWithValue("@textContent", textContent);
