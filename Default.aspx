@@ -40,7 +40,26 @@
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
         </Scripts>
     </telerik:RadScriptManager>
-        <h1>COSMOS</h1>
+        <div class="header">
+            <h1>COSMOS</h1>
+            <div class="loginmenu" >
+                <a href="javascript:void(0);"><p class="loginmenu"><%=(((bool)Session["loggedIn"]==true)?Session["username"]:"Login") %><i class="material-icons right">arrow_drop_down</i></p></a>
+                <ul class="loginmenu dropdown hidden">
+                    <li><a href="javascript:void(0);" id='loginMenuBtn'>Login</a></li>
+                    <li><a href="javascript:void(0);">Register</a></li>
+                    <li><asp:LinkButton ID="LogoutButton" OnClick="LogoutButton_Click" runat="server">Logout</asp:LinkButton></li>
+<%--                    <%= (Session["loggedIn"]!=null)?
+                          "<li id='logoutMenuBtn'>Logout</li>"
+                          :
+                          "<li id='loginMenuBtn'>Login</li>" +
+                          "<li>Register</li>";
+                      %>--%>
+                    
+                </ul>
+            </div>
+        </div>
+        
+
             <div class="row">
                 <div class="col m3 hide-on-small-only"></div>
                 <div class="col m6 s12">
@@ -65,7 +84,7 @@
                 <div class="col m3"></div>
                 <div class="col s12 m6 commentField">
                     <div class="input-field col s12">
-                        <a href="javascript:void(0);" id="ExitReplyScreen" class="exit-btn"><i class="Medium material-icons exit-btn">exit_to_app</i></a>
+                        <a href="javascript:void(0);" class="exit-btn"><i class="Medium material-icons exit-btn">exit_to_app</i></a>
                         <asp:TextBox ID="CommentTextBox" CssClass="materialize-textarea" TextMode="MultiLine" runat="server"></asp:TextBox>
                         <label for="CommentTextBox">Reply to Post!</label>
                     </div>
@@ -74,6 +93,44 @@
                     <i class="material-icons right">chat_bubble</i></asp:LinkButton>
                 <asp:HiddenField ID="Post_id" Value="-1" runat="server" />
                 </div>
+                <div class="col m3"></div>
+            </asp:Panel>
+        </asp:Panel>
+
+        <asp:Panel ID="RegisterMenu" CssClass="commentOverlay hidden" runat="server">
+            <asp:Panel ID="Panel2" CssClass="submitPanel row" runat="server">
+                <div class="col m3"></div>
+                <div class="col s12 m6 commentField">
+                     <div class="input-field col s12">
+                         <!--Fix later-->
+                        <a href="javascript:void(0);" id="test" style="margin-bottom:-150px;" class="exit-btn"><i class="Medium material-icons exit-btn">exit_to_app</i></a>
+                    </div>
+                    <div class="row register-page"> 
+                        <h4 class="col s12">Login/Register</h4>
+                        <div class="input-field col s12 m6">
+                          <asp:TextBox ID="usernameTF" type="email" maxlength="12" autocomplete="off"  runat="server"></asp:TextBox>
+                          <label for="usernameTF">Username</label>
+                        </div>
+                        <div class="input-field col s12 m6">
+                          <asp:TextBox ID="passwordTF" type="password" autocomplete="off" maxlength="40" runat="server"></asp:TextBox>
+                          <label for="password">Password</label>
+                        </div>
+                    <div class="input-field col s12 m6">
+                        <asp:TextBox ID="passwordCongTF" type="password" autocomplete="off" maxlength="40"  runat="server"></asp:TextBox>
+                          <label for="passwordconf">Confirm Password</label>
+                        </div>
+                        <div class="col m6"></div>
+                        </div>
+                    <row>
+                        <div class="col s12 m6"></div>
+                        <div class="reglog-btngroup col s12 m6">
+                            <div class="row">
+                            <asp:LinkButton ID="LoginBtn" CssClass="btn waves-effect waves-light col s6 m3" type="submit" OnClick="LoginBtnButton_Click" runat="server">Login</asp:LinkButton>
+                            <asp:LinkButton ID="RegisterBtn" CssClass="btn waves-effect waves-light col s6 m3" type="submit" OnClick="RegisterButton_Click" runat="server">Register</asp:LinkButton>
+                        </div>
+                            </div>
+                    </row>
+                  </div>
                 <div class="col m3"></div>
             </asp:Panel>
         </asp:Panel>
@@ -93,7 +150,10 @@
          document.onLoad = posts.fadeIn(1200);
          
          $("#CommentArea").hide().removeClass("hidden");
-         $('#ExitReplyScreen').click(function () { $("#CommentArea").fadeOut(300); });
+         $('.exit-btn').click(function () {
+             $("#CommentArea").fadeOut(300);
+             $("#RegisterMenu").fadeOut(300);
+         });
          $('a.OpenReplyWindowBtn').click(function (e) {
 
              $("#CommentArea").fadeIn(300);
@@ -101,6 +161,30 @@
              var post_id = $(this).parents("div.post").children("span.post_id").eq(0).text();
              console.log(post_id);
              document.getElementById("<%=Post_id.ClientID%>").value = post_id;
+         });
+
+         var dropdown = $("div.loginmenu");
+         $(".loginmenu.dropdown").hide();
+         $(".loginmenu.dropdown").removeClass("hidden");
+         dropdown.click(function () {
+             $(".loginmenu.dropdown").toggle(100);
+         });
+
+         $("#RegisterMenu").hide().removeClass("hidden");
+         $("#loginMenuBtn").click(function (e) {
+
+             $("#RegisterMenu").fadeIn(300);
+         });
+
+
+         $("#passwordCongTF").keypress('keyup', function () {
+             console.log("change made")
+             console.log($(this).text());
+             if ($(this).val() == ($("#passwordTF").val()))
+             {
+                 $(this).addClass("valid");
+                 $("#passwordTF").addClass("valid");
+             }
          });
 
     </script>

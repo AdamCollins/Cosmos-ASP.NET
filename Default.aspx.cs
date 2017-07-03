@@ -10,6 +10,7 @@ public partial class Default : System.Web.UI.Page
     private const string connectionString = "Server=.\\SQLEXPRESS;Database=" + database + "; Integrated Security=true";
     protected void Page_Load(object sender, EventArgs e)
     {
+        Debug.WriteLine("User {0} connected",Session["username"]);
         loadPosts();
     }
 
@@ -40,6 +41,7 @@ public partial class Default : System.Web.UI.Page
         SqlConnection conn = null;
         if (connectToDatabase(ref conn))
         {
+            conn.Open();
             SqlCommand cmd = new SqlCommand("SELECT TOP (10) [id], [text_content], [post_datetime] FROM[" + database + "].[dbo].[forum_comments] WHERE[post_id] = @post_id ORDER BY[post_datetime] DESC; ", conn);
             cmd.Parameters.AddWithValue("@post_id", post_id);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -76,6 +78,7 @@ public partial class Default : System.Web.UI.Page
         {
             try
             {
+                conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT id, textContent, postDateTime FROM [" + database + "].[dbo].[forum_posts]  WHERE DATEDIFF(HOUR,postDateTime,GETUTCDATE())<=48 ORDER BY id DESC;", conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -111,13 +114,15 @@ public partial class Default : System.Web.UI.Page
         SqlConnection conn = null;
         if (connectToDatabase(ref conn))
         {
+            conn.Open();
             String query = "INSERT INTO [" + database + "].[dbo].[forum_posts] (textContent, postDateTime) VALUES (@textContent, GETUTCDATE())";
 
             SqlCommand command = new SqlCommand(query, conn);
             command.Parameters.AddWithValue("@textContent", textContent.Replace("\n","</br>"));
             command.ExecuteNonQuery();
             conn.Close();
-            Response.Redirect(Request.RawUrl);
+            Response.Redirect(Request.RawUrl,false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 
@@ -126,6 +131,7 @@ public partial class Default : System.Web.UI.Page
         SqlConnection conn = null;
         if (connectToDatabase(ref conn))
         {
+            conn.Open();
             String query = "INSERT INTO [" + database + "].[dbo].[forum_comments] (post_id, text_content, post_datetime) VALUES (@post_id, @textContent, GETUTCDATE())";
             SqlCommand command = new SqlCommand(query, conn);
             command.Parameters.AddWithValue("@post_id", postId);
@@ -147,6 +153,11 @@ public partial class Default : System.Web.UI.Page
         }
         SubmitPanel.Visible = true;
     }
+    protected void LogoutButton_Click(object sender, EventArgs e)
+    {
+        Debug.WriteLine("Loggout clicked");
+        SignOut();
+    }
 
     //Returns true if connected succesfully
     //Opens connection
@@ -155,7 +166,9 @@ public partial class Default : System.Web.UI.Page
         try
         {
             conn = new SqlConnection(connectionString);
+            //Tests Connection
             conn.Open();
+            conn.Close();
             return true;
         } catch (SqlException e)
         {
@@ -163,5 +176,53 @@ public partial class Default : System.Web.UI.Page
             Debug.WriteLine("Cannot connect");
             return false;
         }
+    }
+
+    protected void LoginBtnButton_Click(object sender, EventArgs e)
+    {
+        Debug.WriteLine("Called");
+        string username = usernameTF.Text;
+        string password = passwordTF.Text;
+        SqlConnection conn = null;
+        if (connectToDatabase(ref conn))
+        {
+            Login login = new Login(database);
+            User user = new User(username, password);
+            if (login.IsLoginSuccesful(user, ref conn))
+            {
+                Session["loggedIn"] = true;
+                Session["username"] = username;
+                Debug.WriteLine("username:" + Session["username"]);
+            }
+        }
+        Response.Redirect(Request.RawUrl);
+    }
+
+
+    protected void RegisterButton_Click(object sender, EventArgs e)
+    {
+        string username = usernameTF.Text;
+        string password = passwordTF.Text;
+        SqlConnection conn = null;
+        if (connectToDatabase(ref conn))
+        {
+            Login login = new Login(database);
+            User user = new User(username, password);
+            login.addUser(user, ref conn);
+            if (login.IsLoginSuccesful(user, ref conn))
+            {
+                Session["loggedIn"] = true;
+                Session["username"] = username;
+                Debug.WriteLine("username:" + Session["username"]);
+            }
+        }
+        Response.Redirect(Request.RawUrl);
+    }
+
+    public void SignOut()
+    {
+        Session["username"] = "";
+        Session["loggedIn"] = false;
+        Response.Redirect(Request.RawUrl);
     }
 }

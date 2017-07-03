@@ -14,7 +14,7 @@
         <ul>
             <li><a class='btn-floating'><i class='material-icons'>star</i></a></li>
             <li><a class='btn-floating blue darken-1 OpenReplyWindowBtn'><i class='material-icons'>chat_bubble_outline</i></a></li>
-            <li><a class='btn-floating green'><i class='material-icons'>report_problem</i></a></li>
+            <li><a class='btn-floating green testButton'><i class='material-icons'>report_problem</i></a></li>
         </ul>
     </div>
     <%= comments %>
